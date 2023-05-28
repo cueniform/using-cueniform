@@ -10,12 +10,14 @@ Here are some steps to get you started:
 1. Initialise your local CUE module
 
    ```shell
+   # shell: cut & paste
    cue mod init
    ```
 
 1. Clone some Cueniform repos
 
    ```shell
+   # shell: cut & paste
    git clone \
        https://github.com/cueniform/terraform-core-schema \
        cue.mod/pkg/cueniform.com/x/terraform-core
@@ -24,32 +26,36 @@ Here are some steps to get you started:
 1. Teach Cueniform about your Terraform version, and how it should validate resources and data-sources
 
    ```shell
+   # shell: cut & paste
    cat <<HERE >cnifm.cue; cue fmt
    package cueniform
    import (
      "cueniform.com/x/terraform-core/1.4/core"
    )
    configuration: core.#Configuration & {
-     resource?: [Type=_]: [_]: #Entities[Type].#Resource
-     data?: [Type=_]: [_]:     #Entities[Type].#DataSource
+     resource?: [Type=_]: [_]: Entities[Type].#Resource
+     data?: [Type=_]: [_]:     Entities[Type].#DataSource
    }
-   #Entities: _
+   Entities: _
    HERE
    ```
 
 1. Teach Cueniform about the built-in provider
 
    ```shell
+   # shell: cut & paste
+   cat <<HERE >providers.cue; cue fmt
    package cueniform
    import (
      "cueniform.com/x/terraform-core/1.4/providers/builtin"
    )
-   #Entities: {
-     builtin.#Entities
+   Entities: {
+     builtin.Entities
    }
+   HERE
    ```
 
-   (The `#Entities` namespace is where we'll be referencing all the upstream
+   (The `Entities` namespace is where we'll be referencing all the upstream
    provider schemata published by Cueniform, in the the future. But right now
    you'll need to generate *manual* schemata for all the resource and data-source
    types you use. Don't worry: a default, opinion-less schema is trivial to
@@ -61,6 +67,7 @@ Here are some steps to get you started:
 1. Start configuring Terraform
 
    ```shell
+   # shell: cut & paste
    cat <<HERE >terraform.cue; cue fmt
    package cueniform
    configuration: {
@@ -74,12 +81,14 @@ Here are some steps to get you started:
 1. Export your config into Terraform JSON
 
    ```shell
+   # shell: cut & paste
    cue export .:cueniform -e configuration -f -o config.tf.json
    ```
 
 1. Run Terraform
 
    ```shell
+   # shell: cut & paste
    terraform apply -auto-approve
    ```
 
@@ -96,17 +105,17 @@ Here are some steps to get you started:
 ## Teaching Cueniform about new resources and data-sources
 
 These lines, in `cnifm.cue`, instruct CUE that every resource and data-source
-has a matching schema, inside the `#Entities` namespace, and that each resource
+has a matching schema, inside the `Entities` namespace, and that each resource
 or data-source must adhere to its matching schema:
 
 ```cue
 configuration: core.#Configuration & {
-  resource?: [Type=_]: [_]: #Entities[Type].#Resource
-  data?: [Type=_]: [_]:     #Entities[Type].#DataSource
+  resource?: [Type=_]: [_]: Entities[Type].#Resource
+  data?: [Type=_]: [_]:     Entities[Type].#DataSource
 }
 ```
 
-Letting you expanding that `#Entities` namespace automatically is part of the
+Letting you expanding that `Entities` namespace automatically is part of the
 work that we're doing with Cueniform, behind the scenes. But until that's ready,
 you need to choose between:
 
@@ -139,9 +148,10 @@ Let's create a new file and add our custom, empty schema for
 `github_repository` resources:
 
 ```shell
+# shell: cut & paste
 cat <<HERE >custom-schemata.cue; cue fmt
 package cueniform
-#Entities: {
+Entities: {
   github_repository: #Resource: {...}
 }
 HERE
@@ -152,6 +162,7 @@ That `...` is CUE's way of saying "any fields are permitted here".
 Now we can add `github_repository` entries in `terraform.cue`, and CUE will be happy:
 
 ```cue
+# shell: cut & paste
 cat <<HERE >>terraform.cue; cue fmt
 configuration: resource: {
   github_repository: {
@@ -160,7 +171,7 @@ configuration: resource: {
     }
   }
 }
-> HERE
+HERE
 
 cue export .:cueniform -e configuration -f -o config.tf.json
 ```
@@ -179,9 +190,10 @@ from making this mistake ever again. That file is the right place to put these
 assertions:
 
 ```shell
+# shell: cut & paste
 cat <<HERE >custom-schemata.cue; cue fmt
 package cueniform
-#Entities: {
+Entities: {
   github_repository: #Resource: {
     name!: string
     visibility!: "public" | "private"
