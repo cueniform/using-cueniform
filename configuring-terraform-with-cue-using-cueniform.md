@@ -149,7 +149,7 @@ Let's create a new file and add our custom, empty schema for
 
 ```shell
 # shell: cut & paste
-cat <<HERE >custom-schemata.cue; cue fmt
+cat <<HERE >schemata.custom.cue; cue fmt
 package cueniform
 Entities: {
   github_repository: #Resource: {...}
@@ -191,7 +191,7 @@ assertions:
 
 ```shell
 # shell: cut & paste
-cat <<HERE >custom-schemata.cue; cue fmt
+cat <<HERE >schemata.custom.cue; cue fmt
 package cueniform
 Entities: {
   github_repository: #Resource: {
