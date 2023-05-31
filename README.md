@@ -37,6 +37,7 @@ We're working hard on bringing features to Cueniform that will allow you to:
 - validate the structure and fields of all Official and Partner providers on the
   [Terraform Registry](https://registry.terraform.io/browse/providers)
 - validate Terraform runtime expressions
-- apply policies that check your configurations are adhering to industry best practises
+- apply policies that check your configurations are adhering to industry best
+  practices
 - apply custom policies to your configuration
 - share custom policies with other users
