@@ -25,7 +25,7 @@ this documentation has 2 main goals:
 
 Using Cueniform, you can:
 
-- [create Terraform configurations in CUE](configuring-terraform-with-cue-using-cueniform.md),
+- [create Terraform configurations in CUE](configuring-terraform-with-cue-using-cueniform.md#configuring-terraform-with-cue-using-cueniform),
   and validate that their core structure matches what Terraform expects
 - [validate the core structure of Terraform JSON configurations](https://github.com/cueniform/terraform-core-schemata/blob/main/README.md)
   - [JSON syntax documentation](https://developer.hashicorp.com/terraform/language/v1.4.x/syntax/json)
