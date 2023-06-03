@@ -95,6 +95,7 @@ Here are some steps to get you started:
    package terraform
    import "terraform.test/cnifm"
    cnifm.#Validate
+
    configuration: {
      output: hello: {
        value: "Hello from Cueniform!"
